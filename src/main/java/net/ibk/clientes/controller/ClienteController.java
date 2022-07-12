@@ -29,7 +29,11 @@ public class ClienteController {
     public void updateCliente(@PathVariable(value ="id") String id,
                               @RequestBody Cliente clienteN){
         Optional<Cliente> cliente = clienteRepository.findById(id);
+        cliente.get().setTipoDocumento(clienteN.getTipoDocumento());
+        cliente.get().setNumeroDocumento(clienteN.getNumeroDocumento());
+        cliente.get().setNombres(clienteN.getNombres());
+        cliente.get().setApellidos(clienteN.getApellidos());
+        //clienteRepository.save(cliente);
 
-        //return cliente;
     }
 }
