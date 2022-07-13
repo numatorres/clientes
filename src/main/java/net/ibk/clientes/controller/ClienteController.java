@@ -1,7 +1,8 @@
 package net.ibk.clientes.controller;
 
 import net.ibk.clientes.model.Cliente;
-import net.ibk.clientes.repository.ClienteRepository;
+import net.ibk.clientes.model.ClienteDTO;
+import net.ibk.clientes.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,27 +14,21 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping("/clientes")
-    public List<Cliente> getAllClientes(){
-        return clienteRepository.findAll();
+    public List<ClienteDTO> getAllClientes() {
+        return clienteService.getClientes();
     }
 
-    @GetMapping("/cliente/{id}")
-    public Optional<Cliente> getCliente(@PathVariable(value ="id") String id){
-        return clienteRepository.findById(id);
+    @GetMapping("/cliente/{codigoUnico}")
+    public Optional<Cliente> getCliente(@PathVariable(value = "codigoUnico") String codigoUnico) {
+        return clienteService.getCliente(codigoUnico);
     }
 
-    @PutMapping("/cliente/{id}")
-    public void updateCliente(@PathVariable(value ="id") String id,
-                              @RequestBody Cliente clienteN){
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        cliente.get().setTipoDocumento(clienteN.getTipoDocumento());
-        cliente.get().setNumeroDocumento(clienteN.getNumeroDocumento());
-        cliente.get().setNombres(clienteN.getNombres());
-        cliente.get().setApellidos(clienteN.getApellidos());
-        //clienteRepository.save(cliente);
-
+    @PutMapping("/cliente/{codigoUnico}")
+    public void updateCliente(@PathVariable(value = "codigoUnico") String codigoUnico,
+                              @RequestBody Cliente clienteN) {
+        clienteService.updateCliente(codigoUnico, clienteN);
     }
 }
