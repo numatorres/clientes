@@ -8,37 +8,39 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "clientes")
+
 public class Cliente implements Serializable {
+
+    private static final long serialVersionUID = -78719825L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idCliente")
     private Long idCliente;
 
-    @NonNull
-    @Column(name = "codigoUnico")
+    @Column(name = "codigoUnico", length = 8, nullable = false, unique = true)
     private String codigoUnico;
 
-    @NonNull
-    @Column(name = "numeroDocumento")
+    @Column(name = "numeroDocumento", length = 20, nullable = false, unique = true)
     private String numeroDocumento;
 
-    @NonNull
-    @Column(name = "nombres")
+    @Column(name = "nombres", length = 50, nullable = false)
     private String nombres;
 
-    @NonNull
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", length = 50, nullable = false)
     private String apellidos;
 
-    @NonNull
-    @Column(name = "idTipoDocumento")
-    private Long idTipoDocumento;
+    @JoinColumn(name = "idTipoDocumento")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoDocumento tipoDocumento;
 
-    /*@ManyToOne
-    private TipoDocumento tipoDocumento;*/
-
+    public Cliente(String codigoUnico, String numeroDocumento, String nombres, String apellidos, TipoDocumento tipoDocumento) {
+        this.codigoUnico = codigoUnico;
+        this.numeroDocumento = numeroDocumento;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.tipoDocumento = tipoDocumento;
+    }
 }

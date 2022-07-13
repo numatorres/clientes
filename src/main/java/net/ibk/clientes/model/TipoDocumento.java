@@ -3,12 +3,10 @@ package net.ibk.clientes.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name="TipoDocumento")
 public class TipoDocumento {
@@ -18,8 +16,15 @@ public class TipoDocumento {
     @Column(name = "idTipoDocumento")
     private Long idTipoDocumento;
 
-    @NonNull
-    @Column(name = "tipoDocumento")
+    @Column(name = "tipoDocumento", length=30, nullable=false, unique=true)
     private String tipoDocumento;
 
+    public TipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public TipoDocumento(Long idTipoDocumento, String tipoDocumento) {
+        this.idTipoDocumento = idTipoDocumento;
+        this.tipoDocumento = tipoDocumento;
+    }
 }

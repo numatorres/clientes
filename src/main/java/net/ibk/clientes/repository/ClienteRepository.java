@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
-    Optional<Cliente> findClientesByCodigoUnico(String codigoUnico);
+    @Query("SELECT t.tipoDocumento as tipoDocumento, c.numeroDocumento as numeroDocumento, c.codigoUnico as codigoUnico, c.nombres as nombres, c.apellidos as apellidos FROM Cliente c JOIN TipoDocumento t ON c.tipoDocumento.idTipoDocumento = t.idTipoDocumento WHERE c.codigoUnico=:codigoUnico ORDER BY c.apellidos")
+    Optional<ClienteDTO> findClientesByCodigoUnico(String codigoUnico);
 
-    @Query("SELECT t.tipoDocumento as tipoDocumento, c.numeroDocumento as numeroDocumento, c.codigoUnico as codigoUnico, c.nombres as nombres, c.apellidos as apellidos FROM Cliente c JOIN TipoDocumento t ON c.idTipoDocumento = t.idTipoDocumento ORDER BY c.apellidos")
+    Optional<Cliente> findClienteBeforeUpdateByCodigoUnico(String codigoUnico);
+
+    @Query("SELECT t.tipoDocumento as tipoDocumento, c.numeroDocumento as numeroDocumento, c.codigoUnico as codigoUnico, c.nombres as nombres, c.apellidos as apellidos FROM Cliente c JOIN TipoDocumento t ON c.tipoDocumento.idTipoDocumento = t.idTipoDocumento ORDER BY c.apellidos")
     List<ClienteDTO> getClientes();
+
 }
