@@ -1,5 +1,7 @@
 package net.ibk.clientes.service;
 
+import net.ibk.clientes.exception.NotFoundException;
+import net.ibk.clientes.exception.NotValidArgumentsException;
 import net.ibk.clientes.model.Cliente;
 import net.ibk.clientes.model.ClienteDTO;
 import net.ibk.clientes.repository.ClienteRepository;
@@ -12,6 +14,8 @@ import java.util.Optional;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+    public static final long tipoDocMin = 1;
+    public static final long tipoDocMax = 3;
     @Autowired
     private ClienteRepository clienteRepository;
 
@@ -28,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public String updateCliente(String codigoUnico, Cliente clienteN) {
+    public void updateCliente(String codigoUnico, Cliente clienteN) throws NotFoundException, NotValidArgumentsException {
         if (verificarCliente(clienteN)) {
             Optional<Cliente> cliente = clienteRepository.findClienteBeforeUpdateByCodigoUnico(encriptar(codigoUnico));
             if (cliente.isPresent()) {
@@ -37,13 +41,12 @@ public class ClienteServiceImpl implements ClienteService {
                 cliente.get().setNombres(clienteN.getNombres());
                 cliente.get().setApellidos(clienteN.getApellidos());
                 clienteRepository.save(cliente.get());
-                return "200";
             }
             else {
-                return "404";
+                throw new NotFoundException("Cliente " + codigoUnico + " no existente");
             }
         } else {
-            return "406";
+            throw new NotValidArgumentsException("Cliente " + codigoUnico + " no existente");
         }
     }
 
@@ -55,9 +58,9 @@ public class ClienteServiceImpl implements ClienteService {
     private boolean verificarCliente(Cliente cliente) {
         return cliente.getApellidos().length() != 0 &&
                 cliente.getNombres().length() != 0 &&
-                cliente.getNumeroDocumento().length() != 0 &&
-                cliente.getTipoDocumento().getIdTipoDocumento() >= 1 &&
-                cliente.getTipoDocumento().getIdTipoDocumento() <= 3;
+                cliente.getNumeroDocumento().length() != 0;/* &&
+                cliente.getTipoDocumento().getIdTipoDocumento() >= tipoDocMin &&
+                cliente.getTipoDocumento().getIdTipoDocumento() <= tipoDocMax;*/
     }
 
     private String encriptar(String cadena)
@@ -69,3 +72,4 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
 }
+

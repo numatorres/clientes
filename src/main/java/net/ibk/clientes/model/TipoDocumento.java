@@ -27,4 +27,8 @@ public class TipoDocumento {
         this.idTipoDocumento = idTipoDocumento;
         this.tipoDocumento = tipoDocumento;
     }
+
+    public TipoDocumento(long idTipoDocumento) {
+        this.idTipoDocumento = idTipoDocumento;
+    }
 }

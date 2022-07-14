@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "93e0ea07-33a1-445d-bd15-89ce74ce28c2",
+		"name": "Pruebas Clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listado de Clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cliente/pqrstvut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cliente",
+						"pqrstvut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Cliente",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numeroDocumento\": \"63445511\",\n    \"nombres\": \"CARLOS ALBERTO\",\n    \"apellidos\": \"LABRADOR MOLINA\",\n    \"tipoDocumento\": {\n        \"idTipoDocumento\": 1,\n        \"tipoDocumento\": \"DNI\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/cliente/pqrspqrs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cliente",
+						"pqrspqrs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Encriptado - Pruebas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/encriptado/00000333",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"encriptado",
+						"00000333"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

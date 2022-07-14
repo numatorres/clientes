@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
-    @Query("SELECT t.tipoDocumento as tipoDocumento, c.numeroDocumento as numeroDocumento, c.codigoUnico as codigoUnico, c.nombres as nombres, c.apellidos as apellidos FROM Cliente c JOIN TipoDocumento t ON c.tipoDocumento.idTipoDocumento = t.idTipoDocumento WHERE c.codigoUnico=:codigoUnico ORDER BY c.apellidos")
+    @Query("SELECT t.tipoDocumento as tipoDocumento, c.numeroDocumento as numeroDocumento, c.codigoUnico as codigoUnico, c.nombres as nombres, c.apellidos as apellidos FROM Cliente c JOIN TipoDocumento t ON c.tipoDocumento.idTipoDocumento = t.idTipoDocumento WHERE c.codigoUnico=:codigoUnico")
     Optional<ClienteDTO> findClientesByCodigoUnico(String codigoUnico);
 
     Optional<Cliente> findClienteBeforeUpdateByCodigoUnico(String codigoUnico);
